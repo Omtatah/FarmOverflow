@@ -23,3 +23,16 @@ def register():
 
     title = "Register"
     return render_template("auth/register.html", form = form)
+
+
+@auth.route("/login", methods = ["GET","POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        user = User.query.filter_by(email = email).first()
+        if user is not None and user.verify_pass(form.password.data):
+            login_user(user,form.remember.data)
+            return redirect(url_for('main.index'))
+    title = "Login"
+    return render_template("auth/login.html", form = form)
