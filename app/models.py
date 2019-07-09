@@ -11,3 +11,9 @@ class Post(db.Model):
     post = db.Column(db.String)
     time = db.Column(db.String)
     comments = db.relationship("Comment",backref = "post", lazy = "dynamic")
+
+
+
+    def save_post(self):
+        db.session.add(self)
+        db.session.commit()
