@@ -1,0 +1,73 @@
+{% macro displayLineList(line_list) %}
+    {% for line in line_list %}
+        <div class="row">
+
+            <div class="col-md-2 col-lg-2">
+
+            </div>
+
+            <div class=" col-xs-12">
+
+                <li class="text-center">
+                    <h1>{{line.title}}</h1>
+                    <h3>
+
+                            {{ line.line_content }}
+
+
+                        <br>
+
+                        <small class="author"> by {{ line.user.username }} </small>
+
+                    </h3>
+                    <h4><a href="{{url_for('main.single_line', id = line.id )}}" class="pitch-content"> <small> Join conversation </small></a> </h4>
+
+                </li>
+
+            </div>
+
+            <div class="col-md-2 col-lg-2">
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+{% endmacro %}
+
+
+<!-- Display lines -->
+{% macro displayCommentList(comment_list) %}
+
+    {% for comment in comment_list %}
+        <div class="row">
+
+            <div class="col-md-2 col-lg-2">
+
+            </div>
+
+            <div class=" col-xs-12">
+
+                <li>
+
+                    <h4 class="comment-content">
+                       <span> {{ comment.user.image }} </span>
+                        <span style="color: teal">{{ comment.user.username }} </span> {{ comment.comment_content}}
+
+
+                    </h4>
+
+                </li>
+
+            </div>
+
+            <div class="col-md-2">
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+{% endmacro %}

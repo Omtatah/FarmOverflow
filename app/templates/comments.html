@@ -1,0 +1,89 @@
+<!--{% extends 'base.html' %}-->
+<!--{% import 'macros.html' as macro %}-->
+
+<!--{% block styles%}-->
+<!--    {{ super() }}-->
+<!--    <link rel="stylesheet" href="{{url_for('static',filename='css/line.css')}}">-->
+<!--    -->
+<!--    <link href="https://fonts.googleapis.com/css?family=Habibi" rel="stylesheet">-->
+<!--{% endblock %}-->
+
+<!--{% block content %}-->
+<!--    <title> {{ title }} </title>-->
+<!--    <div class="container">-->
+
+<!--        <div class="row">-->
+
+<!--            <div class="col-md-2 col-lg-2">-->
+
+<!--                    <a href="/group/{{line.group.id}}">-->
+
+<!--                        <i class="glyphicon glyphicon-menu-left back-icon"></i>-->
+
+<!--                    </a>-->
+<!--                -->
+<!--            </div>-->
+
+<!--            <div class=" col-xs-10 col-sm-10 col-md-8 col-lg-8">-->
+<!--            -->
+<!--                <h2> -->
+
+<!--                    <a href="/group/{{line.group.id}}" class="pitch-content">-->
+<!--                        -->
+<!--                        {{ line.line_content }} -->
+
+<!--                    </a>-->
+
+<!--                    <br>-->
+
+<!--                    <small class="pitch-author"> by {{ line.user.username }} </small>-->
+
+<!--                </h2>-->
+
+<!--            </div>-->
+
+<!--            -->
+<!--               -->
+
+<!--                -->
+<!--            </div>-->
+
+<!--        </div>-->
+
+<!--        <hr>-->
+
+<!--        <div class="row">-->
+<!--            <div class="col-md-4 col-lg-4">-->
+
+<!--                <h2 class="comment-header">-->
+<!--                    List of Comments-->
+<!--                </h2>-->
+<!--                -->
+<!--            </div>-->
+
+<!--            <div class="col-md-4 col-lg-4">-->
+<!--                -->
+<!--            </div>-->
+
+<!--            <div class="col-md-4 col-lg-4">-->
+
+<!--                <h3 class="comment-create">-->
+<!--                    <a href="/line/new/{{line.id}}">-->
+<!--                        Add Comment-->
+<!--                    </a>-->
+<!--                </h3>-->
+<!--                -->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <hr>-->
+<!--        <div class='container'>-->
+<!--        <div class='jumbotron'>-->
+<!--        <ul class="list-unstyled">-->
+<!--            {{ macro.displayCommentList(comments) }}-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--    </div>-->
+<!--{% endblock %}-->
