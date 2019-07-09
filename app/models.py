@@ -1,19 +1,6 @@
-from . import db
-from flask_login import UserMixin
-from app import login_manager
-from werkzeug.security import generate_password_hash,check_password_hash
-
-class Post(db.Model):
-    __tablename__ = "posts"
-    id  = db.Column(db.Integer,primary_key = True)
-    title = db.Column(db.String)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    post = db.Column(db.String)
-    time = db.Column(db.String)
-    comments = db.relationship("Comment",backref = "post", lazy = "dynamic")
-
-
-
-    def save_post(self):
-        db.session.add(self)
-        db.session.commit()
+from . import auth
+from flask import redirect,render_template,url_for
+from flask_login import login_user,logout_user
+from .forms import RegistrationForm,LoginForm
+from ..models import User
+from ..email import create_mail
