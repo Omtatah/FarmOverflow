@@ -1,89 +1,45 @@
-<!--{% extends 'base.html' %}-->
-<!--{% import 'macros.html' as macro %}-->
+{% extends 'base.html' %} {% import "bootstrap/wtf.html" as wtf%} {% block content%}
+<div class="landing">
 
-<!--{% block styles%}-->
-<!--    {{ super() }}-->
-<!--    <link rel="stylesheet" href="{{url_for('static',filename='css/line.css')}}">-->
-<!--    -->
-<!--    <link href="https://fonts.googleapis.com/css?family=Habibi" rel="stylesheet">-->
-<!--{% endblock %}-->
+</div>
+<div class="main">
 
-<!--{% block content %}-->
-<!--    <title> {{ title }} </title>-->
-<!--    <div class="container">-->
+    <div class="row">
+        <div class=container>
+            <h1 class="title text-center display-4">Random Quotes</h1>
 
-<!--        <div class="row">-->
+            <blockquote>{{quote.quote}}
+                <span>&mdash; {{quote.author}}</span>
+            </blockquote>
 
-<!--            <div class="col-md-2 col-lg-2">-->
+        </div>
 
-<!--                    <a href="/group/{{line.group.id}}">-->
 
-<!--                        <i class="glyphicon glyphicon-menu-left back-icon"></i>-->
+        <h1 class="title text-center display-4">Blog Posts</h1>
+        <div class="posts col-sm-9">
+            <div class="container px-auto">
+                {% for post in posts %}
+                <div class="post-card mb-5 text-center">
+                    <div class="img-container">
+                        <img class="text-center img-responsive" src="{{url_for('static', filename=post.image)}}" alt="" height="600px" width="750px">
+                    </div>
 
-<!--                    </a>-->
-<!--                -->
-<!--            </div>-->
 
-<!--            <div class=" col-xs-10 col-sm-10 col-md-8 col-lg-8">-->
-<!--            -->
-<!--                <h2> -->
+                    <h2>{{post.title}}</h2>
+                    <h3><em>By {{post.user.full_name}} | {{post.time[0:10]}} at {{post.time[11:16]}}</em></h3>
+                    <div class="content">
+                        <p>{{post.post[0:200] + "..."}}</p>
+                    </div>
+                    <div class="links">
+                        <a href="{{url_for('main.post_page',id = post.id)}}" class="btn btn-info">Read More</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-sm-2" style="overflow-y: hidden; margin-top: 5px">
+            {{wtf.quick_form(form)}}
+        </div>
+    </div>
 
-<!--                    <a href="/group/{{line.group.id}}" class="pitch-content">-->
-<!--                        -->
-<!--                        {{ line.line_content }} -->
-
-<!--                    </a>-->
-
-<!--                    <br>-->
-
-<!--                    <small class="pitch-author"> by {{ line.user.username }} </small>-->
-
-<!--                </h2>-->
-
-<!--            </div>-->
-
-<!--            -->
-<!--               -->
-
-<!--                -->
-<!--            </div>-->
-
-<!--        </div>-->
-
-<!--        <hr>-->
-
-<!--        <div class="row">-->
-<!--            <div class="col-md-4 col-lg-4">-->
-
-<!--                <h2 class="comment-header">-->
-<!--                    List of Comments-->
-<!--                </h2>-->
-<!--                -->
-<!--            </div>-->
-
-<!--            <div class="col-md-4 col-lg-4">-->
-<!--                -->
-<!--            </div>-->
-
-<!--            <div class="col-md-4 col-lg-4">-->
-
-<!--                <h3 class="comment-create">-->
-<!--                    <a href="/line/new/{{line.id}}">-->
-<!--                        Add Comment-->
-<!--                    </a>-->
-<!--                </h3>-->
-<!--                -->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <hr>-->
-<!--        <div class='container'>-->
-<!--        <div class='jumbotron'>-->
-<!--        <ul class="list-unstyled">-->
-<!--            {{ macro.displayCommentList(comments) }}-->
-<!--        </ul>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--    </div>-->
-<!--{% endblock %}-->
+    {% endblock %}
