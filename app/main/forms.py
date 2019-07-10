@@ -12,6 +12,6 @@ class AddComment(FlaskForm):
     comment = TextAreaField("Comment", validators = [Required()])
     submit = SubmitField("Comment")
 
-class EditBio(FlaskForm):
-    bio = StringField("Bio")
-    submit = SubmitField("Update")
+class UpdateProfile(FlaskForm):
+    bio = TextAreaField('Write something about yourself',validators=[Required()])
+    submit = SubmitField('Submit')
