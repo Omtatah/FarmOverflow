@@ -13,13 +13,18 @@ class User(UserMixin,db.Model):
     """
     __tablename__ = "users"
     id = db.Column(db.Integer,primary_key = True)
-    full_name = db.Column(db.String)
     username = db.Column(db.String)
     email = db.Column(db.String)
     bio = db.Column(db.String)
     image = db.Column(db.String)
     post = db.relationship("Post", backref = "user", lazy = "dynamic")
     user_pass = db.Column(db.String)
+
+    comments = db.relationship('Comment',backref='user',lazy='dynamic')
+    upvotes = db.relationship('UpVote',backref='user',lazy='dynamic')
+    downvotes = db.relationship('DownVote',backref='user',lazy='dynamic')
+    photos = db.relationship('PhotoProfile',backref = 'user',lazy = "dynamic")
+
 
     def save_user(self):
         db.session.add(self)
@@ -36,10 +41,11 @@ class User(UserMixin,db.Model):
     def verify_pass(self,password):
         return check_password_hash(self.user_pass, password)
 
+    def __repr__(self):
+       return f'User {self.username}'
 class Post(db.Model):
     __tablename__ = "posts"
     id  = db.Column(db.Integer,primary_key = True)
-    title = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     post = db.Column(db.String)
     time = db.Column(db.String)
@@ -49,9 +55,19 @@ class Post(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    # def get_post_comments(self):
-    #     comments= Comment.query.filter_by(post_id = self.id)
-    #     return comments
+    @classmethod
+   def get_post(cls,id):
+       posts = Post.query.filter_by(id=id).all()
+       return posts
+
+   @classmethod
+   def get_all_posts(cls):
+       posts = Post.query.order_by('-id').all()
+       return posts
+
+    def get_post_comments(self):
+        comments= Comment.query.filter_by(post_id = self.id)
+        return comments
 
 class Comment(db.Model):
     __tablename__ = "comments"
@@ -65,24 +81,49 @@ class Comment(db.Model):
     def save_comment(self):
         db.session.add(self)
         db.session.commit()
+class UpVote(db.Model):
+   __tablename__ = 'upvotes'
 
-class Subscriber(db.Model):
-    __tablename__ = "subscribers"
-    id = db.Column(db.Integer, primary_key = True)
-    email = db.Column(db.String)
+   id = db.Column(db.Integer,primary_key=True)
+   id_user = db.Column(db.Integer,db.ForeignKey('users.id'))
+   posting_id = db.Column(db.Integer)
 
-    def save_subscriber(self):
-        db.session.add(self)
-        db.session.commit()
+   def save_vote(self):
+       db.session.add(self)
+       db.session.commit()
+
+   @classmethod
+   def get_votes(cls,id):
+       upvote = UpVote.query.filter_by(posting_id=id).all()
+       return upvote
+
+   def __repr__(self):
+       return f'{self.id_user}:{self.posting_id}'
 
 
-class Quote:
-    '''
-    Quote class to define Quote Objects
-    '''
+class DownVote(db.Model):
+   __tablename__ = 'downvotes'
 
-    def __init__(self,id, author, quote):
-        self.id =id
-        self.author = author
-        self.quote = quote
+   id = db.Column(db.Integer,primary_key=True)
+   id_user = db.Column(db.Integer,db.ForeignKey('users.id'))
+   posting_id = db.Column(db.Integer)
 
+   def save_vote(self):
+       db.session.add(self)
+       db.session.commit()
+
+   @classmethod
+   def get_downvotes(cls,id):
+       downvote = DownVote.query.filter_by(posting_id=id).all()
+       return downvote
+
+   def __repr__(self):
+       return f'{self.id_user}:{self.posting_id}'
+
+
+class PhotoProfile(db.Model):
+   __tablename__ = 'profile_photos'
+
+   id = db.Column(db.Integer,primary_key = True)
+   pic_path = db.Column(db.String())
+   user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
