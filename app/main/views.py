@@ -1,16 +1,19 @@
+from flask import render_template, request, redirect, url_for, flash, abort
 from . import main
-from flask_login import current_user, login_required
-# from .forms import AddPostForm,SubscribeForm,AddComment,EditBio
-from ..models import Post,User,Comment,UpVote,DownVote, PhotoProfile
-from flask import redirect,url_for,render_template,flash,request
-# from .. import db,photos
-from datetime import datetime
-from app.email import create_mail
+from ..models import User, Post, Comment, UpVote, DownVote
+from flask_login import login_required, current_user
+from .. import db
+from .forms import AddPostForm, AddComment, UpdateProfile
 
-@main.route("/", methods = ["GET","POST"])
+@main.route('/')
 def index():
-    title = "Home"
-    return render_template("index.html",title = title)
+    '''
+    root page function that returns the index page and its data
+    '''
+    title = "Welcome | One Minute Pitch"
+
+    return render_template("index.html", title=title)
+
 
 @main.route("/add/post/",methods = ["GET","POST"])
 @login_required
