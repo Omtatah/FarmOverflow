@@ -4,6 +4,6 @@ from flask import render_template
 
 def create_mail(subject,template,to,**kwargs):
 
-    message = Message(subject,sender="amwaniki180@gmail.com",recipients = [to])
+    message = Message(subject,sender="developersjuniors@gmail.com",recipients = [to])
     message.body = render_template(template + ".txt", **kwargs)
     mail.send(message)

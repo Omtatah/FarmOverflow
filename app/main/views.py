@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash, abort
 from . import main
-from ..models import User, Post, Comment, UpVote, DownVote
+from ..models import User, Post, Comment
 from flask_login import login_required, current_user
 from .. import db
 from .forms import AddPostForm, AddComment, UpdateProfile
@@ -56,10 +56,10 @@ def post_page(id):
         return redirect(url_for('main.post_page', id = post.id))
     all_comments = Comment.get_comments(id)   
     title = 'FARMOVERFLOW | CONVERSATIONS'
-    up_likes = UpVote.get_votes(id)
-    down_likes = DownVote.get_downvotes(id)
+    # up_likes = UpVote.get_votes(id)
+    # down_likes = DownVote.get_downvotes(id)
     # comments = Comment.query.filter_by(post_id = post.id)
-    return render_template("post.html", title = title, post = post,form = form, comments=all_comments, likes = up_likes, dislikes=down_likes)
+    return render_template("post.html", title = title, post = post,form = form, comments=all_comments)
 
 main.route("/delete/<id>")
 def delete(id):
@@ -99,15 +99,14 @@ def update_profile(user_id):
         return redirect(url_for('main.profile',id = user.id)) 
     return render_template("update_profile.html",form = form,title = title)
 
-@main.route("/pic/<user_id>/update", methods = ["POST"])
+@main.route('/user/<uname>/update/pic',methods= ['POST'])
 @login_required
-def update_pic(user_id):
-    user = User.query.filter_by(id = user_id).first()
-    title = "Edit Profile"
-    if "profile-pic" in request.files:
-        pic = photos.save(request.files["profile-pic"])
-        file_path = f"photos/{pic}"
-        user.image = file_path
+def update_pic(uname):
+    user = User.query.filter_by(username = uname).first()
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+        user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for("main.profile", id = user.id))
 

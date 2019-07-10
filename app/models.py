@@ -3,11 +3,9 @@ from flask_login import UserMixin
 from app import login_manager
 from werkzeug.security import generate_password_hash,check_password_hash
 from time import time
-
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
-    
+   return User.query.get(int(user_id))
 class User(UserMixin,db.Model):
     """
     Class  to create users
@@ -97,39 +95,36 @@ class UpVote(db.Model):
    def save_vote(self):
        db.session.add(self)
        db.session.commit()
-
-   @classmethod
-   def get_votes(cls,id):
-       upvote = UpVote.query.filter_by(posting_id=id).all()
-       return upvote
-
-   def __repr__(self):
-       return f'{self.id_user}:{self.posting_id}'
-
-
+# class UpVote(db.Model):
+#   __tablename__ = 'upvotes'
+#   id = db.Column(db.Integer,primary_key=True)
+#   id_user = db.Column(db.Integer,db.ForeignKey('users.id'))
+#   posting_id = db.Column(db.Integer)
+#   def save_vote(self):
+#       db.session.add(self)
+#       db.session.commit()
+#   @classmethod
+#   def get_votes(cls,id):
+#       upvote = UpVote.query.filter_by(posting_id=id).all()
+#       return upvote
+#   def __repr__(self):
+#       return f'{self.id_user}:{self.posting_id}'
 class DownVote(db.Model):
-   __tablename__ = 'downvotes'
-
-   id = db.Column(db.Integer,primary_key=True)
-   id_user = db.Column(db.Integer,db.ForeignKey('users.id'))
-   posting_id = db.Column(db.Integer)
-
-   def save_vote(self):
-       db.session.add(self)
-       db.session.commit()
-
-   @classmethod
-   def get_downvotes(cls,id):
-       downvote = DownVote.query.filter_by(posting_id=id).all()
-       return downvote
-
-   def __repr__(self):
-       return f'{self.id_user}:{self.posting_id}'
-
-
+  __tablename__ = 'downvotes'
+  id = db.Column(db.Integer,primary_key=True)
+  id_user = db.Column(db.Integer,db.ForeignKey('users.id'))
+  posting_id = db.Column(db.Integer)
+  def save_vote(self):
+      db.session.add(self)
+      db.session.commit()
+  @classmethod
+  def get_downvotes(cls,id):
+      downvote = DownVote.query.filter_by(posting_id=id).all()
+      return downvote
+  def __repr__(self):
+      return f'{self.id_user}:{self.posting_id}'
 class PhotoProfile(db.Model):
-   __tablename__ = 'profile_photos'
-
-   id = db.Column(db.Integer,primary_key = True)
-   pic_path = db.Column(db.String())
-   user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+  __tablename__ = 'profile_photos'
+  id = db.Column(db.Integer,primary_key = True)
+  pic_path = db.Column(db.String())
+  user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
