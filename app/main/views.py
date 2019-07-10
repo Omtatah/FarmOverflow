@@ -113,4 +113,3 @@ def update_pic(user_id):
         user.image = file_path
         db.session.commit()
     return redirect(url_for("main.profile", id = user.id))
-
