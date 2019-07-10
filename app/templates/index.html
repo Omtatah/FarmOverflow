@@ -5,7 +5,11 @@
 <div class="main">
 
     <div class="row">
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 86de72358eae5547b52005837f2f5a4c4fd7ced5
 
 
         <h1 class="title text-center display-4">Blog Posts</h1>
@@ -19,19 +23,16 @@
 
 
                     <h2>{{post.title}}</h2>
-                    <h3><em>By {{post.user.full_name}} | {{post.time[0:10]}} at {{post.time[11:16]}}</em></h3>
+                    <h3><em>By {{post.user.username}}</em></h3>
                     <div class="content">
                         <p>{{post.post[0:200] + "..."}}</p>
                     </div>
                     <div class="links">
-                        <a href="{{url_for('main.post_page',id = post.id)}}" class="btn btn-info">Read More</a>
+                        <a href="{{url_for('main.post_page',id = post.id)}}" class="btn btn-info">Join Conversation</a>
                     </div>
                 </div>
                 {% endfor %}
             </div>
-        </div>
-        <div class="col-sm-2" style="overflow-y: hidden; margin-top: 5px">
-            {{wtf.quick_form(form)}}
         </div>
     </div>
 
