@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for, flash, abort
 from . import main
 from ..models import User, Post, Comment
 from flask_login import login_required, current_user
-from .. import db
+from .. import db,photos
 from .forms import AddPostForm, AddComment, UpdateProfile
 
 @main.route('/')
@@ -88,13 +88,11 @@ def profile(id):
 @main.route("/<user_id>/profile/edit",methods = ["GET","POST"])
 @login_required
 def update_profile(user_id):
-    title = "Edit Profile"
     user = User.query.filter_by(id = user_id).first()
-    form = EditBio()
-
+    form = UpdateProfile()
     if form.validate_on_submit():
-        bio = form.bio.data
-        user.bio = bio
+        user.bio = form.bio.data
+        db.session.add(user)
         db.session.commit() 
         return redirect(url_for('main.profile',id = user.id)) 
     return render_template("update_profile.html",form = form,title = title)
