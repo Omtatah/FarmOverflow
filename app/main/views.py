@@ -14,7 +14,7 @@ def index():
     posts = Post.query.order_by(Post.time.desc())
 
 
-    return render_template("index.html", title=title, posts=posts)
+    return render_template("home.html", title=title, posts=posts)
 
 
 @main.route("/add/post/",methods = ["GET","POST"])
