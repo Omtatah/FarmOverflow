@@ -17,7 +17,7 @@ class User(UserMixin,db.Model):
     username = db.Column(db.String)
     email = db.Column(db.String)
     bio = db.Column(db.String)
-    image = db.Column(db.String)
+    image = db.Column(db.String(255))
     posts = db.relationship("Post", backref = "user", lazy = "dynamic")
     user_pass = db.Column(db.String)
 
@@ -82,6 +82,11 @@ class Comment(db.Model):
     def save_comment(self):
         db.session.add(self)
         db.session.commit()
+
+    @classmethod
+    def get_comments(cls,id):
+        comments = Comment.query.filter_by(post_id=id).all()
+        return comments
 class UpVote(db.Model):
    __tablename__ = 'upvotes'
 
