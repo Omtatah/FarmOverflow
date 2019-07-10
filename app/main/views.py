@@ -14,7 +14,7 @@ def index():
     posts = Post.query.order_by(Post.time.desc())
 
 
-    return render_template("index.html", title=title, posts=posts)
+    return render_template("home.html", title=title, posts=posts)
 
 
 @main.route("/add/post/",methods = ["GET","POST"])
@@ -56,10 +56,10 @@ def post_page(id):
         return redirect(url_for('main.post_page', id = post.id))
     all_comments = Comment.get_comments(id)   
     title = 'FARMOVERFLOW | CONVERSATIONS'
-    up_likes = UpVote.get_votes(id)
-    down_likes = DownVote.get_downvotes(id)
+    # up_likes = UpVote.get_votes(id)
+    # down_likes = DownVote.get_downvotes(id)
     # comments = Comment.query.filter_by(post_id = post.id)
-    return render_template("post.html", title = title, post = post,form = form, comments=all_comments, likes = up_likes, dislikes=down_likes)
+    return render_template("post.html", title = title, post = post,form = form, comments=all_comments)
 
 main.route("/delete/<id>")
 def delete(id):
