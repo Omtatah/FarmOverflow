@@ -56,12 +56,12 @@ class Post(db.Model):
         db.session.commit()
 
     @classmethod
-   def get_post(cls,id):
+    def get_post(cls,id):
        posts = Post.query.filter_by(id=id).all()
        return posts
 
-   @classmethod
-   def get_all_posts(cls):
+    @classmethod
+    def get_all_posts(cls):
        posts = Post.query.order_by('-id').all()
        return posts
 
