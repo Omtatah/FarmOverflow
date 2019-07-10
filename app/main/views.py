@@ -51,7 +51,7 @@ def post_page(id):
     if form.validate_on_submit():
         # name = form.username.data
         content = form.comment.data
-        new_comment = Comment(content = content, post = post)
+        new_comment = Comment(content = content, post = post, user = current_user)
         new_comment.save_comment()
         return redirect(url_for('main.post_page', id = post.id))
     all_comments = Comment.get_comments(id)   
