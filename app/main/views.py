@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from .forms import AddPostForm,SubscribeForm,AddComment,EditBio
 from ..models import Post,User,Comment
 from flask import redirect,url_for,render_template,flash,request
-# from .. import db,photos
+from .. import db,photos
 from datetime import datetime
 from app.email import create_mail
 
@@ -102,14 +102,13 @@ def update_profile(user_id):
         return redirect(url_for('main.profile',id = user.id)) 
     return render_template("update_profile.html",form = form,title = title)
 
-@main.route("/pic/<user_id>/update", methods = ["POST"])
+@main.route('/user/<uname>/update/pic',methods= ['POST'])
 @login_required
-def update_pic(user_id):
-    user = User.query.filter_by(id = user_id).first()
-    title = "Edit Profile"
-    if "profile-pic" in request.files:
-        pic = photos.save(request.files["profile-pic"])
-        file_path = f"photos/{pic}"
-        user.image = file_path
+def update_pic(uname):
+    user = User.query.filter_by(username = uname).first()
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+        user.profile_pic_path = path
         db.session.commit()
-    return redirect(url_for("main.profile", id = user.id))
+    return redirect(url_for('main.profile',uname=uname))
