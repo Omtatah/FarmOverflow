@@ -8,7 +8,7 @@
         {% else %}
             <img src="{{url_for('static',filename = 'photos/avatar.png')}}" alt="" class="img-thumbnail">
         {% endif %}
-        <a href="/user/{{comment.user.username}}&{{comment.user.id}}">{{comment.user.username|capitalize}}</a>
+        <a href="/user/{{comment.user.username}}">{{comment.user.username|capitalize}}</a>
     </p>
     <p>{{comment.content}}</p>
 </div>
