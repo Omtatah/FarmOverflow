@@ -20,7 +20,7 @@ class ProdConfig(Config):
 
 class DevConfig(Config):
     SECRET_KEY='absc'
-    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://francis:1234@localhost/farm'
+    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://antony:dee@localhost/farm'
     DEBUG = True
 
 class TestConfig(Config):
