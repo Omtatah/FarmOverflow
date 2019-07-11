@@ -81,6 +81,7 @@ def delete_comment(id):
 @main.route("/profile/<id>")
 def profile(id):
     user = User.query.filter_by(id = id).first()
+    
     posts = Post.query.filter_by(user_id = user.id).order_by(Post.time.desc())
     title = user.username
     return render_template("profile.html", user = user,posts = posts, title = title)
