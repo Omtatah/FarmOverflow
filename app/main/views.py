@@ -56,10 +56,10 @@ def post_page(id):
         return redirect(url_for('main.post_page', id = post.id))
     all_comments = Comment.get_comments(id)   
     title = 'FARMOVERFLOW | CONVERSATIONS'
-    # up_likes = UpVote.get_votes(id)
-    # down_likes = DownVote.get_downvotes(id)
+    up_likes = UpVote.get_votes(id)
+    down_likes = DownVote.get_downvotes(id)
     # comments = Comment.query.filter_by(post_id = post.id)
-    return render_template("post.html", title = title, post = post,form = form, comments=all_comments)
+    return render_template("post.html", title = title, post = post,form = form, comments=all_comments, likes = up_likes, dislikes=down_likes)
 
 main.route("/delete/<id>")
 def delete(id):
@@ -122,14 +122,14 @@ def like(id):
         to_str = f'{get_pitch}'
         print(valid_string+" "+to_str)
         if valid_string == to_str:
-            return redirect(url_for('main.pitch',id=id))
+            return redirect(url_for('main.post_page',id=id))
         else:
             continue
 
-    like_pitch = UpVote(user = current_user, pitching_id=id)
-    like_pitch.save_vote()
+    like_post = UpVote(user = current_user, posting_id=id)
+    like_post.save_vote()
 
-    return redirect(url_for('main.pitch',id=id))
+    return redirect(url_for('main.post_page',id=id))
 
 @main.route('/home/dislike/<int:id>', methods = ['GET','POST'])
 @login_required
@@ -141,11 +141,11 @@ def dislike(id):
         to_str = f'{get_pitch}'
         print(valid_string+" "+to_str)
         if valid_string == to_str:
-            return redirect(url_for('main.pitch',id=id))
+            return redirect(url_for('main.post_page',id=id))
         else:
             continue
 
-    dislike_pitch = DownVote(user = current_user, pitching_id=id)
-    dislike_pitch.save_vote()
+    dislike_post = DownVote(user = current_user, posting_id=id)
+    dislike_post.save_vote()
 
-    return redirect(url_for('main.pitch',id=id))
+    return redirect(url_for('main.post_page',id=id))

@@ -5,17 +5,40 @@
 {% endblock%}
 {% block content %}
 <div class="container">
+    <div class="card-body">
     <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8 comments">
+        
+        <div class="col-md-1"></div>
+         <div class="col-md-3">
             <h4>
                 {% if post.user.image %}
-                <img src="{{url_for('static',filename = post.user.image)}}" alt="" class="img-thumbnail"> {% else %}
-                <img src="{{url_for('static',filename = 'photos/avatar.png')}}" alt="" class="img-thumbnail"> {% endif %}
+                <img src="{{url_for('static',filename = post.user.image)}}" alt="" class="img-circle"> {% else %}
+                <img src="{{url_for('static',filename = 'photos/avatar.png')}}" alt="" class="img-circle"> {% endif %}
+                <br> <br>
                 <a href="/user/{{post.user.username}}&{{post.user.id}}">{{post.user.username|capitalize}}</a>
             </h4>
+         </div>
+         <div class="col-md-8">
             <p>{{post.post}}</p>
+            <div class="row" >
+                    <div class="col-md-2" >
+
+            <ul class="list-inline">
+                    <li class="list-inline-item"><a class="btn btn-primary" href="{{url_for('main.like',id=post.id)}}"><small><i class="fa fa-thumbs-up fa-2x"></i></small></a></li>
+                    <li class="list-inline-item">{{likes|length}}</li>
+                </ul>
+                    </div>
+                <div class="col-md-2" >
+
+                <ul class="list-inline">
+                    <li class="list-inline-item"><a class="btn btn-warning" href="{{url_for('main.dislike',id=post.id)}}"><i class="fa fa-thumbs-down fa-2x"></i> </a></li>
+                    <li class="list-inline-item">{{dislikes|length}}</li>
+                </ul>
+                </div>
+            </div>
         </div>
+        </div>
+    </div>
         <div class="row comment-row">
             <div class="comment-card col-sm-4">
                 <h3>Leave a Comment</h3>
@@ -27,9 +50,9 @@
     </div>
     
     <style>
-    .img-thumbnail{
-    width: 30px;
-    height: 30px;
+    .img-circle{
+    width: 80px;
+    height: 80px;
      }
     </style>
 

@@ -4,12 +4,19 @@
 <div class="comment">
     <p>
         {% if comment.user.profile_pic_path %}
-            <img src="{{url_for('static',filename = comment.user.profile_pic_path)}}" alt="" class="img-thumbnail">
+            <img src="{{url_for('static',filename = comment.user.profile_pic_path)}}" alt="" class="img-thumbnails">
         {% else %}
-            <img src="{{url_for('static',filename = 'photos/avatar.png')}}" alt="" class="img-thumbnail">
+            <img src="{{url_for('static',filename = 'photos/avatar.png')}}" alt="" class="img-thumbnails">
         {% endif %}
         <a href="/user/{{comment.user.username}}">{{comment.user.username|capitalize}}</a>
     </p>
     <p>{{comment.content}}</p>
 </div>
-{% endfor %} {% endmacro %}
+{% endfor %}
+<style>
+    .img-thumbnails{
+    width: 30px;
+    height: 30px;
+     }
+    </style>
+{% endmacro %}
