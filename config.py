@@ -15,7 +15,7 @@ class Config:
     MAIL_USERNAME='developersjuniors@gmail.com'
     SECRET_KEY='1234'
     SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://francis:1234@localhost/farm'
-
+    WEATHER_API = '7af5acbdb838b1560514beb6fdeee3db'
 
 class ProdConfig(Config):
     SECRET_KEY = os.environ.get("SECRET_KEY")
