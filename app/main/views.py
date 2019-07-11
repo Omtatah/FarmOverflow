@@ -47,6 +47,7 @@ def add_post():
     return render_template("add_pitch.html",form = form,title = title)
 
 @main.route("/post/<int:id>",methods = ["GET","POST"])
+@login_required
 def post_page(id):
     post = Post.query.filter_by(id = id).first()
     form = AddComment()
@@ -69,7 +70,7 @@ def post_page(id):
     # comments = Comment.query.filter_by(post_id = post.id)
     return render_template("post.html", title = title, post = post,form = form, comments=all_comments, likes = up_likes, dislikes=down_likes)
 
-main.route("/delete/<id>")
+@main.route("/delete/<id>")
 def delete(id):
     post = Post.query.filter_by(id = id).first()
     user_id = post.user_id
@@ -87,6 +88,7 @@ def delete_comment(id):
     return redirect(url_for("main.post_page", id = post_id))
 
 @main.route("/profile/<id>")
+@login_required
 def profile(id):
     user = User.query.filter_by(id = id).first()
     
