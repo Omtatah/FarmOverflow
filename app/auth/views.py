@@ -10,13 +10,12 @@ def register():
     form = RegistrationForm()
 
     if form.validate_on_submit():
-        full_name = form.full_name.data
         username = form.username.data
         password = form.password.data
         email = form.email.data
-        user = User(full_name = full_name, password = password,email = email, username = username)
+        user = User( password = password,email = email, username = username)
         user.save_user()
-        create_mail("Welcome","email/email",user.email,name = user.full_name)
+        create_mail("Welcome","email/email",user.email)
 
         return redirect(url_for('auth.login'))
 
@@ -32,7 +31,7 @@ def login():
         if user is not None and user.verify_pass(form.password.data):
             login_user(user,form.remember.data)
             return redirect(url_for('main.index'))
-    title = "Login"
+    title = "Login | Farm Overflow"
     return render_template("auth/login.html", form = form)
 
 @auth.route("/logout")
