@@ -18,14 +18,9 @@ class User(UserMixin,db.Model):
     username = db.Column(db.String)
     email = db.Column(db.String)
     bio = db.Column(db.String)
-    profile_pic_path = db.Column(db.String())
+    image = db.Column(db.String)
     posts = db.relationship("Post", backref = "user", lazy = "dynamic")
     user_pass = db.Column(db.String)
-
-    # comments = db.relationship('Comment',backref='user',lazy='dynamic')
-    # upvotes = db.relationship('UpVote',backref='user',lazy='dynamic')
-    # downvotes = db.relationship('DownVote',backref='user',lazy='dynamic')
-    # photos = db.relationship('PhotoProfile',backref = 'user',lazy = "dynamic")
 
 
     def save_user(self):
