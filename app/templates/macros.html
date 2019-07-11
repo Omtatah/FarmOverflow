@@ -3,12 +3,12 @@
 <hr>
 <div class="comment">
     <p>
-        {% if comment.user.profile_pic_path %}
-            <img src="{{url_for('static',filename = comment.user.profile_pic_path)}}" alt="" class="img-thumbnails">
+        {% if comment.user.image %}
+            <img src="{{url_for('static',filename = comment.user.image)}}" alt="" class="img-thumbnails">
         {% else %}
             <img src="{{url_for('static',filename = 'photos/avatar.png')}}" alt="" class="img-thumbnails">
         {% endif %}
-        <a href="/user/{{comment.user.username}}">{{comment.user.username|capitalize}}</a>
+        <a href="/user/{{comment.user.username}}&{{comment.user.id}}">{{comment.user.username|capitalize}}</a>
     </p>
     <p>{{comment.content}}</p>
 </div>
