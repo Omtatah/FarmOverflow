@@ -91,16 +91,17 @@ def update_profile(user_id):
     return render_template("update_profile.html",form = form)
 
 
-@main.route('/update_profile',methods= ['POST'])
+@main.route('/update_profile/<int:user_id>',methods= ['POST'])
 @login_required
-def update_pic(username):
-    user = User.query.filter_by(username = uname).first()
-    if 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
-        path = f'photos/{filename}'
-        user.profile_pic_path = path
+def update_pic(user_id):
+    user = User.query.filter_by(id = user_id).first()
+    title = "EDIT PROFILE"
+    if 'profile-pic' in request.files:
+        pic = photos.save(request.files["profile-pic"])
+        file_path = f"photos/{pic}"
+        user.image = file_path
         db.session.commit()
-    return redirect(url_for(".profile", username = user))
+    return redirect(url_for("main.profile", id = user_id))
 
 
 @main.route('/home/like/<int:id>', methods = ['GET','POST'])
