@@ -3,9 +3,12 @@ from flask_login import UserMixin
 from app import login_manager
 from werkzeug.security import generate_password_hash,check_password_hash
 from time import time
+
+
 @login_manager.user_loader
 def load_user(user_id):
    return User.query.get(int(user_id))
+
 class User(UserMixin,db.Model):
     """
     Class  to create users
@@ -15,14 +18,9 @@ class User(UserMixin,db.Model):
     username = db.Column(db.String)
     email = db.Column(db.String)
     bio = db.Column(db.String)
-    image = db.Column(db.String(255))
+    image = db.Column(db.String)
     posts = db.relationship("Post", backref = "user", lazy = "dynamic")
     user_pass = db.Column(db.String)
-
-    comments = db.relationship('Comment',backref='user',lazy='dynamic')
-    upvotes = db.relationship('UpVote',backref='user',lazy='dynamic')
-    downvotes = db.relationship('DownVote',backref='user',lazy='dynamic')
-    photos = db.relationship('PhotoProfile',backref = 'user',lazy = "dynamic")
 
 
     def save_user(self):
@@ -42,6 +40,7 @@ class User(UserMixin,db.Model):
 
     def __repr__(self):
        return f'User {self.username}'
+   
 class Post(db.Model):
     __tablename__ = "posts"
     id  = db.Column(db.Integer,primary_key = True)
@@ -95,20 +94,6 @@ class UpVote(db.Model):
    def save_vote(self):
        db.session.add(self)
        db.session.commit()
-# class UpVote(db.Model):
-#   __tablename__ = 'upvotes'
-#   id = db.Column(db.Integer,primary_key=True)
-#   id_user = db.Column(db.Integer,db.ForeignKey('users.id'))
-#   posting_id = db.Column(db.Integer)
-#   def save_vote(self):
-#       db.session.add(self)
-#       db.session.commit()
-#   @classmethod
-#   def get_votes(cls,id):
-#       upvote = UpVote.query.filter_by(posting_id=id).all()
-#       return upvote
-#   def __repr__(self):
-#       return f'{self.id_user}:{self.posting_id}'
 class DownVote(db.Model):
   __tablename__ = 'downvotes'
   id = db.Column(db.Integer,primary_key=True)
@@ -123,8 +108,9 @@ class DownVote(db.Model):
       return downvote
   def __repr__(self):
       return f'{self.id_user}:{self.posting_id}'
-class PhotoProfile(db.Model):
-  __tablename__ = 'profile_photos'
-  id = db.Column(db.Integer,primary_key = True)
-  pic_path = db.Column(db.String())
-  user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+  
+# class PhotoProfile(db.Model):
+#   __tablename__ = 'profile_photos'
+#   id = db.Column(db.Integer,primary_key = True)
+#   pic_path = db.Column(db.String())
+#   user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
