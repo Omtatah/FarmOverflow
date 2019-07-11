@@ -14,8 +14,8 @@ class User(UserMixin,db.Model):
     """
     __tablename__ = "users"
     id = db.Column(db.Integer,primary_key = True)
-    username = db.Column(db.String)
-    email = db.Column(db.String)
+    username = db.Column(db.String(40),unique = True, index=True)
+    email = db.Column(db.String(255),unique = True, index = True)
     bio = db.Column(db.String)
     image = db.Column(db.String(255))
     posts = db.relationship("Post", backref = "user", lazy = "dynamic")
