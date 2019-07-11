@@ -18,10 +18,10 @@
 
 
                     <h2>{{post.title}}</h2>
-                    <h3><em>By {{post.user.username}}</em></h3>
                     <div class="content">
                         <p>{{post.post[0:200] + "..."}}</p>
                     </div>
+                    <h6>By {{post.user.username}}</h6>
                     <div class="links">
                         <a href="{{url_for('main.post_page',id = post.id)}}" class="btn btn-info">Join Conversation</a>
                     </div>
