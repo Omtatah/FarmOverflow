@@ -1,8 +1,8 @@
 from flask import render_template, request, redirect, url_for, flash, abort
 from . import main
-from ..models import User, Post, Comment, UpVote, DownVote
+from ..models import User, Post,Comment, UpVote, DownVote
 from flask_login import login_required, current_user
-from .. import db
+from .. import db, photos
 from .forms import AddPostForm, AddComment, UpdateProfile
 
 @main.route('/')
@@ -91,7 +91,7 @@ def profile(id):
 def update_profile(user_id):
     title = "Edit Profile"
     user = User.query.filter_by(id = user_id).first()
-    form = EditBio()
+    form = UpdateProfile()
 
     if form.validate_on_submit():
         bio = form.bio.data
@@ -110,7 +110,7 @@ def update_pic(user_id):
         file_path = f"photos/{pic}"
         user.image = file_path
         db.session.commit()
-    return redirect(url_for("main.profile", id = user.id))
+    return redirect(url_for("main.profile", id = current_user.id))
 
 @main.route('/home/like/<int:id>', methods = ['GET','POST'])
 @login_required
