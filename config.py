@@ -20,14 +20,14 @@ class ProdConfig(Config):
 
 class DevConfig(Config):
     SECRET_KEY='absc'
-    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://moringa:12345@localhost/test2'
+    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://moringa:12345@localhost/test3'
     DEBUG = True
 
 class TestConfig(Config):
     """
     This is the class which will contain the test configurations
     """
-    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://moringa:12345@localhost/test2'
+    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://moringa:12345@localhost/test3'
 
 
 config_options = {

@@ -1,9 +1,9 @@
 from flask import render_template, request, redirect, url_for, flash, abort
 from . import main
-from ..models import User, Post, Comment
+from ..models import User, Post, Comment,UpVote,DownVote
 from flask_login import login_required, current_user
 from .. import db,photos
-from .forms import AddPostForm, AddComment, UpdateProfile
+from .forms import AddPostForm, AddComment, UpdateProfile,EditBio
 
 @main.route('/')
 def index():
@@ -12,8 +12,6 @@ def index():
     '''
     title = "Welcome | One Minute Pitch"
     posts = Post.query.order_by(Post.time.desc())
-
-
     return render_template("home.html", title=title, posts=posts)
 
 
@@ -43,23 +41,19 @@ def post_page(id):
     post = Post.query.filter_by(id = id).first()
     form = AddComment()
     comment = Comment.query.filter_by(id = id).first()
-    # post_id = comment.post.id
 
     if id is None:
         abort(404)
 
     if form.validate_on_submit():
-        # name = form.username.data
+        user = form.username.data
         content = form.comment.data
         new_comment = Comment(content = content, post = post)
         new_comment.save_comment()
         return redirect(url_for('main.post_page', id = post.id))
     all_comments = Comment.get_comments(id)   
     title = 'FARMOVERFLOW | CONVERSATIONS'
-    # up_likes = UpVote.get_votes(id)
-    # down_likes = DownVote.get_downvotes(id)
-    # comments = Comment.query.filter_by(post_id = post.id)
-    return render_template("post.html", title = title, post = post,form = form, comments=all_comments)
+    return render_template("post.html", title = title, post = post,form = form, comments=all_comments,user =user)
 
 main.route("/delete/<id>")
 def delete(id):
@@ -95,7 +89,7 @@ def update_profile(user_id):
         db.session.add(user)
         db.session.commit() 
         return redirect(url_for('main.profile',id = user.id)) 
-    return render_template("update_profile.html",form = form,title = title)
+    return render_template("update_profile.html",form = form)
 
 @main.route('/user/<uname>/update/pic',methods= ['POST'])
 @login_required
