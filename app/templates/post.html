@@ -9,38 +9,46 @@
          <div class="col-md-2">
             <h4>
                 {% if post.user.image %}
-                <img src="{{url_for('static',filename = post.user.image)}}" alt="" class="img-circle"> {% else %}
-                <img src="{{url_for('static',filename = 'photos/avatar.png')}}" alt="" class="img-circle"> {% endif %}
+                <p>
+                <img src="{{url_for('static',filename = post.user.image)}}" alt="" class="img-circle">
                 <br> <br>
                 <a href="/user/{{post.user.username}}&{{post.user.id}}">{{post.user.username|capitalize}}</a>
+            </p>
+                {% else %}
+                <p>
+                <img src="{{url_for('static',filename = 'photos/avatar.png')}}" alt="" class="img-circle"> 
+                <br> <br>
+                <a href="/user/{{post.user.username}}&{{post.user.id}}">{{post.user.username|capitalize}}</a>
+            </p>
+            {% endif %}
             </h4>
          </div>
          <div class="col-md-5">
-            <p>{{post.post}}</p>
+            <h3>{{post.post}}</h3>
             <div class="row" >
                     <div class="col-md-2" >
 
             <ul class="list-inline">
-                    <li class="list-inline-item"><a class="btn btn-primary" href="{{url_for('main.like',id=post.id)}}"><i class="fa fa-thumbs-up fa-2x"></i></a></li>
+                    <li class="list-inline-item"><a class="btn btn-primary" href="{{url_for('main.like',id=post.id)}}"><span class="glyphicon glyphicon-thumbs-up"></span></a></li>
                     <li class="list-inline-item">{{likes|length}}</li>
                 </ul>
                     </div>
                 <div class="col-md-2" >
 
                 <ul class="list-inline">
-                    <li class="list-inline-item"><a class="btn btn-warning" href="{{url_for('main.dislike',id=post.id)}}"><i class="fa fa-thumbs-down fa-2x"></i> </a></li>
+                    <li class="list-inline-item"><a class="btn btn-warning" href="{{url_for('main.dislike',id=post.id)}}"><span class="glyphicon glyphicon-thumbs-down"></span></a></li>
                     <li class="list-inline-item">{{dislikes|length}}</li>
                 </ul>
                 </div>
             </div>
             <!-- <div class="row comment-row"> -->
                     <div class="comment-card">
-                        <h3>Comment</h3>
+                        <h3>Add your Comment</h3>
                         {{wtf.quick_form(form)}}
                     </div>
                     <!-- </div> -->
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" style="overflow:scroll; height: 570px" >
             {{macro.displayComments(comments)}}
         </div>
         </div>
