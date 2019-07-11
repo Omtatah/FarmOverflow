@@ -54,6 +54,6 @@ To run the tests for the class files:
 For any questions, troubleshooting or contributions, find me on:
 Email: farmersmembers@gmail.com
 
-
 ## License
-MIT License Copyright (c) {2019} farmers Member
+[MIT](./License)
+ Copyright (c) 2019 **FarmOverflow**
