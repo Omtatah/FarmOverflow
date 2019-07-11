@@ -10,12 +10,20 @@ def index():
     '''
     root page function that returns the index page and its data
     '''
+    title = "Welcome | FarmOverflow"
+
+
+    return render_template("index.html", title=title)
+@main.route('/home')
+def home():
+    '''
+    root page function that returns the index page and its data
+    '''
     title = "Welcome | One Minute Pitch"
     posts = Post.query.order_by(Post.time.desc())
 
 
     return render_template("home.html", title=title, posts=posts)
-
 
 @main.route("/add/post/",methods = ["GET","POST"])
 @login_required
@@ -149,3 +157,4 @@ def dislike(id):
     dislike_post.save_vote()
 
     return redirect(url_for('main.post_page',id=id))
+
