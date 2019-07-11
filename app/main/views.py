@@ -158,3 +158,19 @@ def dislike(id):
 
     return redirect(url_for('main.post_page',id=id))
 
+@main.route('/user/<username>&<id_user>')
+@login_required
+def profiles(username, id_user):
+    user = User.query.filter_by(username = username).first()
+
+    title = f"{username.capitalize()}'s Profile"
+
+    get_posts = Post.query.filter_by(user_id = id_user).all()
+    get_comments = Comment.query.filter_by(user_id = id_user).all()
+    get_upvotes = UpVote.query.filter_by(id_user = id_user).all()
+    get_downvotes = DownVote.query.filter_by(id_user = id_user).all()
+
+    if user is None:
+        abort(404)
+    
+    return render_template('profile.html', user = user, title=title, posts_no = get_posts, comments_no = get_comments, likes_no = get_upvotes, dislikes_no = get_downvotes)
