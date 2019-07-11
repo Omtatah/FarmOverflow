@@ -19,7 +19,7 @@ def home():
     '''
     root page function that returns the index page and its data
     '''
-    title = "Welcome | One Minute Pitch"
+    title = "Welcome | FarmOverflow"
     posts = Post.query.order_by(Post.time.desc())
 
 
@@ -42,7 +42,7 @@ def add_post():
         emails = []
         title = 'New Post'
         
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.home'))
 
     return render_template("add_pitch.html",form = form,title = title)
 
