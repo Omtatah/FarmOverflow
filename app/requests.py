@@ -1,5 +1,5 @@
 # import urllib.request,json
-# from .models import Quote
+# from .models import Weather
 
 
 # def get_quotes():

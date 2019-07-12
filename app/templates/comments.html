@@ -1,21 +1,13 @@
-{% extends 'base.html' %} {% import "bootstrap/wtf.html" as wtf%} {% block content%}
+{% extends 'base.html' %} 
+{% import "bootstrap/wtf.html" as wtf%}
+{% block content%}
 <div class="landing">
 
 </div>
 <div class="main">
 
     <div class="row">
-        <div class=container>
-            <h1 class="title text-center display-4">Random Quotes</h1>
-
-            <blockquote>{{quote.quote}}
-                <span>&mdash; {{quote.author}}</span>
-            </blockquote>
-
-        </div>
-
-
-        <h1 class="title text-center display-4">Blog Posts</h1>
+        <h1 class="title text-center display-4">STACKS</h1>
         <div class="posts col-sm-9">
             <div class="container px-auto">
                 {% for post in posts %}
@@ -23,10 +15,9 @@
                     <div class="img-container">
                         <img class="text-center img-responsive" src="{{url_for('static', filename=post.image)}}" alt="" height="600px" width="750px">
                     </div>
-
-
-                    <h2>{{post.title}}</h2>
                     <h3><em>By {{post.user.full_name}} | {{post.time[0:10]}} at {{post.time[11:16]}}</em></h3>
+                </div>
+
                     <div class="content">
                         <p>{{post.post[0:200] + "..."}}</p>
                     </div>
@@ -34,6 +25,7 @@
                         <a href="{{url_for('main.post_page',id = post.id)}}" class="btn btn-info">Read More</a>
                     </div>
                 </div>
+                
                 {% endfor %}
             </div>
         </div>

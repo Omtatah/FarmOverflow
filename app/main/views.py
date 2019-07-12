@@ -10,12 +10,20 @@ def index():
     '''
     root page function that returns the index page and its data
     '''
-    title = "Welcome | One Minute Pitch"
+    title = "Welcome | FarmOverflow"
+
+
+    return render_template("index.html", title=title)
+@main.route('/home')
+def home():
+    '''
+    root page function that returns the index page and its data
+    '''
+    title = "Welcome | FarmOverflow"
     posts = Post.query.order_by(Post.time.desc())
 
 
     return render_template("home.html", title=title, posts=posts)
-
 
 @main.route("/add/post/",methods = ["GET","POST"])
 @login_required
@@ -34,11 +42,12 @@ def add_post():
         emails = []
         title = 'New Post'
         
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.home'))
 
     return render_template("add_pitch.html",form = form,title = title)
 
 @main.route("/post/<int:id>",methods = ["GET","POST"])
+@login_required
 def post_page(id):
     post = Post.query.filter_by(id = id).first()
     form = AddComment()
@@ -61,7 +70,7 @@ def post_page(id):
     # comments = Comment.query.filter_by(post_id = post.id)
     return render_template("post.html", title = title, post = post,form = form, comments=all_comments, likes = up_likes, dislikes=down_likes)
 
-main.route("/delete/<id>")
+@main.route("/delete/<id>")
 def delete(id):
     post = Post.query.filter_by(id = id).first()
     user_id = post.user_id
@@ -79,6 +88,7 @@ def delete_comment(id):
     return redirect(url_for("main.post_page", id = post_id))
 
 @main.route("/profile/<id>")
+@login_required
 def profile(id):
     user = User.query.filter_by(id = id).first()
     
@@ -149,3 +159,20 @@ def dislike(id):
     dislike_post.save_vote()
 
     return redirect(url_for('main.post_page',id=id))
+
+@main.route('/user/<username>&<id_user>')
+@login_required
+def profiles(username, id_user):
+    user = User.query.filter_by(username = username).first()
+
+    title = f"{username.capitalize()}'s Profile"
+
+    get_posts = Post.query.filter_by(user_id = id_user).all()
+    get_comments = Comment.query.filter_by(user_id = id_user).all()
+    get_upvotes = UpVote.query.filter_by(id_user = id_user).all()
+    get_downvotes = DownVote.query.filter_by(id_user = id_user).all()
+
+    if user is None:
+        abort(404)
+    
+    return render_template('profile.html', user = user, title=title, posts_no = get_posts, comments_no = get_comments, likes_no = get_upvotes, dislikes_no = get_downvotes)
