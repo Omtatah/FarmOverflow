@@ -18,7 +18,7 @@
                 <p>
                 <img src="{{url_for('static',filename = 'photos/avatar.png')}}" alt="" class="img-circle"> 
                 <br> <br>
-                <a href="/user/{{post.user.username}}&{{post.user.id}}">{{post.user.username|capitalize}}</a>
+                <a href="/user/{{post.user.username}}&{{post.user.id}}"><strong>{{post.user.username|capitalize}}</strong></a>
             </p>
             {% endif %}
             </h4>
@@ -30,20 +30,20 @@
 
             <ul class="list-inline">
                     <li class="list-inline-item"><a class="btn btn-primary" href="{{url_for('main.like',id=post.id)}}"><span class="glyphicon glyphicon-thumbs-up"></span></a></li>
-                    <li class="list-inline-item">{{likes|length}}</li>
+                    <li class="list-inline-item"><strong>{{likes|length}}</strong></li>
                 </ul>
                     </div>
                 <div class="col-md-2" >
 
                 <ul class="list-inline">
                     <li class="list-inline-item"><a class="btn btn-warning" href="{{url_for('main.dislike',id=post.id)}}"><span class="glyphicon glyphicon-thumbs-down"></span></a></li>
-                    <li class="list-inline-item">{{dislikes|length}}</li>
+                    <li class="list-inline-item"><strong>{{dislikes|length}}</strong></li>
                 </ul>
                 </div>
             </div>
             <!-- <div class="row comment-row"> -->
                     <div class="comment-card">
-                        <h3>Add your Comment</h3>
+                        <h4>Add your Comment</h4>
                         {{wtf.quick_form(form)}}
                     </div>
                     <!-- </div> -->
@@ -59,6 +59,12 @@
     width: 80px;
     height: 80px;
      }
+    h3{
+        font-family: 'Amiri', serif;
+    }
+    h4{
+        font-family: 'Cormorant Garamond', serif;
+    }
     </style>
 
     {% endblock%}
